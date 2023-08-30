@@ -1,5 +1,5 @@
 ---
-title: "R Basics"
+title: "Learning R Basics" 
 author: "NSArrows Innovations"
 date: "March 6, 2022"
 output: word_document
