@@ -1,0 +1,616 @@
+---
+title: "R Basics"
+author: "NSArrows Innovations"
+date: "March 6, 2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+R is a statistical language and is most common in the Data Science Industry. The language nickname is "You Stupid Darkness" and the version we are using is 3.4.0. However, it is a practice to execute the codes in and Integrated Development Environment (IDE) known as RStudio. 
+
+Do not worry with the jargons, we will be starting from the basics of programming. 
+
+RStudio needs to be installed on your system after you have installed R language. RStudio connects with R language and we can then execute R from RStudio. We will majorly concentrate on the two parts of RStudio - Console and Script area. Console is connected directly with you R language and executes statement by statment. However, in the Script area you can write a number of statements together and execute them at will.
+
+
+Variables and Constants
+As we have studied in our school days, variable is something that can change and costants never change. So in an example where x=10 it means x is our variable which has been assigned the constant 10. Going ahead using x anywhere would mean that x is representing the constant 10. But, mind it R is a case sensitive language and hence X is not equal to x. Let us see that with an example.
+```{r}
+x=10
+x
+```
+
+So we see above that when we print x, we get a value of 10. What should happen when we print X?
+```{r}
+#X
+```
+So it gives us an error that the object is not found since R is a case sensitive language and x is not equal to X.
+
+
+Data Types:
+What do we understand by the literal meaning of the word data type. It means what type of data is it. We can classify data in three primary types which are also used as three primary data types in R:
+1. Numeric
+2. Character
+3. Logical
+
+Let us not worry about the other data types now. We will learn it eventually.
+
+But, how do we know which variable is of which data type. We will use the class command to check the data type of the variable.
+```{r}
+class(x)
+```
+
+So, we just ran class(x) which showed us that x is numeric. Let us try using another data types.
+```{r}
+y="King"
+z=TRUE
+
+class(y)
+class(z)
+```
+
+We have assigned "King" to variable y and TRUE to z. Now, when we check the datatypes of y and z we see them to be chacter and logical respectively. Any guess what should be the datatype of "10" (10 within quotes)?
+
+Let's try it out
+```{r}
+a="10"
+class(a)
+```
+
+We see now that the class of 'a' is character while that of 'x' is numeric. So, any value being placed in a variable in quotes is always going to be a character.
+
+But, there can be a number of situations when we get data the column in the dataset might contain numbers but in character data type and we might need them as numbers. So we in such a case need to typecast the variables, i.e. convert it from character to numeric. Let's see how we do that.
+```{r}
+b <- as.numeric(a)
+
+a
+class(a)
+
+b 
+class(b)
+```
+
+Now, a new question; what happens if the character is alphabets and we convert it into numeric? Let's see it.
+```{r}
+y
+
+c <- as.numeric(y)
+c
+```
+
+We see that y had the value "King" and we have converted it into a numeric. When converting it into numeric it does not give you an error rather it just gives a warning message and converts it into NA (Not Applicable).
+
+
+
+Character Operations with R Functions
+
+These character operations will keep on changing for all projects with the requirements. But, we will need to know the basic commands which we can use easily as and when the requirement arises. 
+
+Concatenation:
+Concatenation is joining multiple strings together. Let us see in the following example.
+```{r}
+x <- "Edupristine"
+y <- "Business"
+z <- "Analytics"
+res <- paste(x,y,z)
+res
+```
+
+So we see in the above that we had assigned values to x, y and z and res has the concatenated results with a space in between. What to do if I need to concatenate without spaces.
+```{r}
+res2 <- paste0(x,y,z)
+res3 <- paste(x,y,z, sep = "")
+
+res2
+res3
+```
+
+So there are two ways of solving the problem. We used the command paste0 and also the command paste to do it using the parameter sep. sep parameter is used to put in different values in between. Say for example I want to concatenate with a hyphen in between. This is what we should do
+```{r}
+res4 <- paste(x,y,z, sep="-")
+res4
+```
+
+Substitution:
+Substituting parts of the string is an important function which is quite often used when cleaning the data. Lets say we want to replace the first hypen in the above example with a comma.
+```{r}
+res5 <- sub("-",",",res4)
+res5
+```
+
+So we see that sub substitutes the first instance only. But, what if I needed to substitute all the occurences of hypen with comma? 
+```{r}
+res6 <- gsub("-",",",res4)
+res6
+```
+
+We see here that gsub substitues all the occurences in rather than substituting just the first occurence.
+
+
+Text Extraction:
+Extracting parts of text is another very important function that is performed with the strings. Suppose we want to extract "Edupristine"" from res4.
+```{r}
+res7 <- substr(res6, 1, 11)
+res7
+```
+
+We use the command substr above for extraction of the strings. The second parameter given to the command is the starting position of the extraction and the last parameter the last position of the extraction.
+
+Logical Operations
+Let us try for some logical operations in R.
+```{r}
+x=10
+y=20
+z=30
+
+x>y
+z>y
+x==z
+```
+
+We just checked that x greater than y is false, z greater than y is true and x equal to z is false.
+
+It is not always that we need to check only one condition. At times we might need to check multiple conditions together. Lets check it out how to combine conditions
+```{r}
+z>y & y>x
+
+x>y | z>y
+```
+
+So we see above that z>y AND (denoted by & in R) y>x are true and hence the final result is TRUE. Similarly in the other example we use pipe (|) for resembling OR.
+
+Derived data types
+Derived data types are the data types that evolve from the primary data types. We will be learning about the following:
+1. Vectors
+2. Data Frames
+3. Lists
+
+
+Vectors
+Vectors are a collections of scalars of the same data type. So, it means that vectors will have units of primary data types. Hence, vectors can be either a numeric, character or a logical.
+
+Let us create a vector first. To create any vector we will use the command 'c' which we can call as combination.
+```{r}
+x <- c(2,3,5,1,2,4,-5)
+x
+```
+
+We see that the vector is created of numbers. We need to check if it is a vector and what data type it is.
+```{r}
+class(x)
+is.vector(x)
+```
+
+We see that it is a numeric data type. Also, the command is.vector will check if the result is a vector. We get the answer that the answer is TRUE. Hence we have x as a numeric vector.
+
+Let us access the vector elements.
+To access the third element of vector x.
+```{r}
+x[3]
+```
+
+It can also be possible that we need to acces 1st to 4th element of x
+```{r}
+x[1:4]
+```
+
+1:4 will create a sequence from 1 to 4. When we provide 1:4 as the position to the vector x, it will pick up the values at positions 1 to 4 of x.
+
+If we have to pick up values from 1 to 3, 5th and 7th element.
+```{r}
+x[c(1:3,5,7)]
+```
+
+In the above example we see that since it is not a sequence, we have to use combination to create the list of indexes and then pass it to the vector x. It will then return the respective vector values.
+
+Any ideas what will happen if we use negative index as shown below:
+```{r}
+x[-2]
+```
+
+A negative index will remove that value at the second index which is mentioned with negative sign. Let us try removing multiple indeces from the vector.
+```{r}
+x[-c(1:3,5,7)]
+```
+We have deleted a combination of 1st to 3rd, 5th and 7th element from vector x.
+
+Till now we have seen accessing numerical indeces of the vector. We can never use positive and negative index together.
+Let us try accessing logical index of vector. Say for example, we want list of numbers above 3
+```{r}
+x>3
+x[x>3]
+```
+
+We see that when we execute x>3, that will give us True at positions of the vector where x>3. And when we pass this to the index of vector x, we will get results from vector x which are positions which are TRUE.
+
+Let us try creating vector in a different way using seq command.
+```{r}
+x <- seq(1,5,by=1)
+y <- seq(1,5,length=11)
+x
+y
+```
+
+We can use the command seq using two parameters. One is the 'by' parameter where the sequence is created using the difference mentioned in by. Second, parameter is 'length' which tells how many elements should be there in the vector.
+
+We can also use the rep command to repeat values and create the vector
+```{r}
+x <- rep("a",5)
+y <- rep(c("a","b"),5)
+z <- rep(c("a","b"), each=5)
+x
+y
+z
+```
+
+The first example of rep shows that we can repeat a value n number of times as shown in the command.
+The second example shows that a collection can be repeated n number of times.
+The third example shows each element of the collection can be repeated n number of times.
+
+Vector operations are similar to normal matrix operations. Let us see other operations on vectors.
+
+```{r}
+x <- letters
+y <- 1:26
+z <- paste(x,y, sep="*")
+res <- paste(z, collapse =" + " )
+x
+y
+z
+res
+```
+
+We have moved alphabets in small caps to x and a sequence from 1 to 26 to y. We then create a vector pasting x and y with an asterisk in between. Now, we combine all elements of the vector using a plus sign in between. This can be done using the paste command and collapse parameter.
+
+
+More Utility functions and operators
+match
+This gives for the first vector elements, index numbers at which they are present in the second vector. If an
+element of first vector is not present in second, you will get NA for an index reference.
+```{r}
+x=c("a","$","e","1","i","o","u")
+y=letters
+match(x,y)
+```
+
+The result tells us that first, second and fifth elements of x are present at 1,5, 9, 15 and 21st position in y. Second
+and fourth element of x are not present in y.
+
+%in%
+Functionality of this operator is similar to match function. Although the results might be more intuitive
+to some. Instead of returning straight up indices, it returns a logical vector telling whether an element is
+present in another vector or not.
+```{r}
+x %in% y
+```
+
+%%
+This is modulo operator. It simply returns the value of remainder if you divide the first number by second.
+```{r}
+5%%3
+```
+
+Extract odd numbers from the vector 2:99 using modulo operator
+which
+This function again belongs to family of functions which give you information regarding presence of elements of one vector in another. It returns indices of elements in a vector which fulfill the specified condition
+```{r}
+x=2:99
+which(x%%2!=0)
+```
+
+The returned vector contains indices not the values themselves, you can get the values by passing
+these indices to vector for sub-setting.
+
+```{r}
+x[which(x%%2!=0)]
+```
+
+sample
+This is a very useful function for taking random sample from your vector. Lets look at a quick example, we'll
+go into details with subsequently more examples.
+```{r}
+x=1:50
+sample(x,5)
+```
+
+```{r}
+sample(x,5)
+```
+
+You can see that this function sample is returning 5 randomly chosen numbers from the vector x. You must have also noticed that those 5 numbers in these two iterations are different. Because each randomly chosen numbers differ. This can be avoided by using a fixed seed for the randomizing algorithm.
+
+```{r}
+set.seed(10)
+sample(x,5)
+```
+
+when you run this call to function sample with seed 10 , your output is going to be 26 16 21 33  4. Irrespective of what OS/System/Version you are running your codes. 
+
+
+Lists
+Vectors are called atomic data type because they can not contain higher data types themselves. List are recursive data types . They can contain all sorts of object and they don't need to be of same type either. Here is an example
+
+```{r}
+x=1:10
+y=letters
+z=3.14
+
+list1=list(x,y,z)
+list1
+```
+
+List looks much more complex in comparison to vectors. Here is how to access individual list elements
+```{r}
+list1[[2]]
+```
+
+Accessing the 10th element of list 2
+```{r}
+list1[[2]][10]
+```
+
+If you find [[]] to be really cumbersome like other people, you can name your list elements while creating the list.
+
+```{r}
+list2=list(cust_num=x,prod_name=y,marktng_expense=z)
+list2
+```
+
+Accessing the 10th element of list 2
+```{r}
+list2$prod_name[10]
+```
+
+Data Frames
+Data frames are actually a special kind of list. They are list of vectors of equal length. They are close to data sets kind of which we are used to seeing in general. Lets make one data frame:
+
+```{r}
+set.seed(15)
+x=1:26
+y=letters
+df=data.frame(x,y)
+df
+```
+
+You can see the data frame listed in console with 26 values. Number columns that you see on the left are known as rownames for data frames. We'll talk about them in detail in some time. You can view this data by typing in View(data frame name) or simply clicking on the data set name in the Environment window on top left.
+
+```{r}
+View(df)
+```
+
+names
+This outputs variables names of the data set.
+```{r}
+names(df)
+```
+
+We can change the column names as mentioned below:
+```{r}
+names(df)=c("Prod_ID","Prod_Name")
+df
+```
+
+rownames
+This gives row names of the data set. As function names, row names can be used to assign row names.
+```{r}
+rownames(df)
+```
+
+Let us rename the rownames
+```{r}
+rownames(df)=paste0("R",1:26)
+df
+```
+
+dim , nrow, ncol
+dim gives dimension of the data set in terms of number rows and vector. Output is a vector of length 2. You can get individual row numbers and column numbers using nrow and ncol.
+
+```{r}
+dim(df)
+```
+
+```{r}
+nrow(df)
+```
+
+```{r}
+ncol(df)
+```
+
+str
+str gives you a quick glimpse of the structure of the data in terms of variable names, their type and first few values.
+```{r}
+str(df)
+```
+
+you can see here that character variable type is given as Factor rather than character. Character variables are by default stored as factors which are nothing but integers assigned to different levels/unique values for character variable. This allows R to save on memory because integers take lesser space that character values. If you want to force the type , you can always do that for that particular column.
+
+```{r}
+df$Prod_Name <- as.character(df$Prod_Name)
+str(df)
+```
+
+Accessing and Sorting Data Frames
+To understand data frame access, just imagine it to be a vectors in both the dimensions, row and columns [although this is not correct technically]. Before we start exploring how to pass row,column indices to a data set for access, let me show how we can we can load the data in R and how we can process the data. We will be using the Credit Card dataset.
+```{r}
+filedata1 <- read.csv("/Users/yogeshs/Training/Data Science/Edupristine/01_R Language/CCData1.csv", stringsAsFactors = F)
+str(filedata1)
+filedata2 <- read.csv("/Users/yogeshs/Training/Data Science/Edupristine/01_R Language/CCData1.csv", stringsAsFactors = F)
+str(filedata2)
+```
+
+Merging Data together
+```{r}
+library(dplyr)
+CCData<- as.data.frame(bind_rows(filedata1, filedata2))
+str(CCData)
+```
+
+Looking at the categorical variables in detail.
+```{r}
+table(CCData$demographic_slice)
+```
+
+
+```{r}
+for(i in 1:ncol(CCData)){
+  if(class(CCData[,i])== "numeric"){
+    print(paste("Mean of", names(CCData)[i], "is", mean(CCData[,i])))
+  }
+}
+```
+
+Lets look at condition filtering of the data. We'll start with base R approach to view all data of East and West Region
+```{r}
+CCData[CCData$country_reg == "E" | CCData$country_reg == "W", ]
+```
+
+Using the dplyr method
+```{r}
+library(dplyr)
+filter(CCData, country_reg=="E" | country_reg=="W")
+```
+
+
+```{r}
+library(dplyr)
+filter(CCData, country_reg %in% c("E","W"))
+```
+
+See, you don't need to bother with that $ reference to data frame all the time. Code is much neater and readable. Lets look at column selection dropping by name. You'll be definietly pleseantly surprised by the additional functionalities by dplyr.
+```{r}
+CCData[,c("customer_id", "demographic_slice", "est_income")]
+```
+
+Much better to do this with dplyr
+```{r}
+select(CCData, customer_id, demographic_slice, est_income)
+```
+
+Use colon to select multiple contiguous columns, and use contains to match columns by name note: "starts_with", "ends_with" can also be used to match columns by name 
+```{r}
+select(CCData, customer_id:hold_bal, contains("score"))
+```
+
+Now what if we wanted to do many operations at once; for example, selction and conditional filtering. We can do so by nesting our functions. So, say for example we want customer IDs and country regions where the estimated income is more than the average income of the entire region.
+```{r}
+filter(select(CCData, customer_id, country_reg, est_income), est_income > mean(est_income))
+```
+
+This nesting methodology becomes very cumbersome very fast . This defies the purpose with which we started , making our code more readable. Comes to your rescue %>% operator , also called chaining operator or the continuation operator. Performing the above example using chaining method
+```{r}
+CCData %>%
+  select(customer_id, country_reg, est_income) %>%
+  filter(est_income > mean(est_income))
+```
+
+Does this not look a neater method to solve problems as compared to the previous nesting method??
+
+Mutate verb to add/modify variables of in the data set
+```{r}
+CCData$ScoreRatio = CCData$RiskScore/CCData$imp_cscore
+CCData[,c("RiskScore", "imp_cscore", "ScoreRatio")]
+```
+
+Let's do it using the chaining method
+```{r}
+CCData %>%
+  select(RiskScore, imp_cscore) %>%
+  mutate(ScoreRatio = RiskScore/imp_cscore)
+```
+
+Now we look at exactly that, summarising data by groups or collapsing data to its group wise summaries using dplyr
+```{r}
+CCData %>%
+  group_by(demographic_slice) %>%
+  summarise(avg_est_income = mean(est_income, na.rm=TRUE))
+```
+
+As moving slowly towards predictive modelling , you'd need to take random sample from your data for different purposes. You can achieve that in a rather simple manner by using the function sample which we have used a lot so far. Here goes an example for taking 70% random data from data frame CCdata
+```{r}
+set.seed(11)
+s=sample(1:nrow(CCData),0.7*nrow(CCData))
+s
+
+sampled.data <- CCData[s,]
+glimpse(sampled.data)
+```
+
+Working with Date & Time Data in R
+We will be using the lubridate package to handle dates. It is one of the most important topics when handling data in R. The way date time data is recorded is essentially as a character and when it is dealt with, its like numbers . Now parsing these seemingly character strings to numbers in a way that they can represent data time and then throw those time zones in the mix and you have pretty difficult situation to handle.
+
+```{r}
+library(lubridate)
+ymd("20170804")
+```
+```{r}
+mdy("08-04-2017")
+```
+
+```{r}
+dmy("04/08/2017")
+```
+
+you include time components and timezones as well by simply adding the order of time components hours ("h"), minutes ("m") and seconds ("s"). Appropriate function name exists.
+```{r}
+timeval <- ymd_hms("2017-08-04 12:00:25", tz = "Pacific/Auckland")
+```
+
+You can now extract individual elements too
+```{r}
+second(timeval)
+```
+
+```{r}
+wday(timeval)
+```
+
+```{r}
+wday(timeval, label = TRUE)
+```
+
+Check for leap year
+```{r}
+leap_year(2001)
+leap_year(2016)
+```
+
+You can do arithmatic with dates also for example you want to add an year to a date
+```{r}
+ymd(20160101) + dyears(1)
+ymd(20160101) + years(1)
+```
+
+So far we have seen seemingly well formatted character strings as input for dates which is not always the case. Dates can have months as character names or even abreviated form of three letter words. And same goes for other date components as well. You can handle that by specifying your own formats too these formatbuilders and function parse_date_time.
+. b : Abbreviated month name
+. B : Full month name
+. d : Day of the month as decimal number (01 to 31 or 0 to 31)
+. H : Hours as decimal number (00 to 24 or 0 to 24). 24 hrs format
+. I : Hours as decimal number (01 to 12 or 0 to 12). 12 hrs format
+. j : Day of year as decimal number (001 to 366 or 1 to 366).
+. m : Month as decimal number (01 to 12 or 1 to 12).
+. M : Minute as decimal number (00 to 59 or 0 to 59).
+. p : AM/PM indicator in the locale. Used in conjunction with I and not with H.
+. S : Second as decimal number (00 to 61 or 0 to 61), allowing for up to two leap-seconds (but POSIXcompliant implementations will ignore leap seconds).
+. OS :Fractional second.
+. y : Year without century (00 to 99 or 0 to 99).
+. Y : Year with century.
+```{r}
+parse_date_time("01-16-Jan","%d-%y-%b")
+```
+
+```{r}
+parse_date_time("31-16-Oct 02:05 PM","%d-%y-%b %I:%M %p")
+```
+
+Handling hetrogenous formats
+```{r}
+x = c("17-04-16", "170205", "17-05 05", "29-07-14 15:12")
+parse_date_time(x, c("%y%m%d", "%y%m%d %H%M"))
+```
+
+
+
