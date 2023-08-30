@@ -52,6 +52,7 @@ class(y)
 class(z)
 ```
 
+
 We have assigned "King" to variable y and TRUE to z. Now, when we check the datatypes of y and z we see them to be chacter and logical respectively. Any guess what should be the datatype of "10" (10 within quotes)?
 
 Let's try it out
